@@ -1,7 +1,7 @@
 {
   "name": "ventilator_desktop_app",
   "version": "1.0.0",
-  "description": "This is application for GigaVentilator",
+  "description": "This is an application for GigaVentilator",
   "main": "index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -11,9 +11,7 @@
   },
   "author": "adnan",
   "license": "ISC",
-  "dependencies": {
-    "electron-squirrel-startup": "^1.0.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.61",
     "@electron-forge/maker-deb": "^6.0.0-beta.61",

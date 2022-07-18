@@ -1,4 +1,4 @@
-function render_volume_chart() {
+function render_volume_chart (w, h) {
 
     var margin = {
         top: 20,
@@ -8,11 +8,11 @@ function render_volume_chart() {
     }
 
     var x_index = 0;
-    var width = 800 - margin.left - margin.right;
-    var height = 190 - margin.top - margin.bottom;
+    var width = (w * 0.68) - margin.left - margin.right;
+    var height = (h * 0.38)  - margin.top - margin.bottom;
     var data = [];
-    var x = d3.scaleLinear().domain([0, 720]).range([0, width]);
-    var y = d3.scaleLinear().domain([-100, 1000]).range([height, 0]);
+    var x = d3.scaleLinear().domain([0, width]).range([0, width]);
+    var y = d3.scaleLinear().domain([-height, height]).range([height, 0]);
     var count = 0;
     var line_to_draw;
 
@@ -47,7 +47,6 @@ function render_volume_chart() {
         .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-    // Render two slip paths. One will be drawn as the other is wiped. To create the wipe effect, I simply reduce the size of the clip path and translate it.
     var clip_path_1 = svg.append("defs")
         .append("clipPath")
         .attr("id", "clip1");
@@ -114,8 +113,7 @@ function render_volume_chart() {
         };
         data.push(point);
         x_index++;
-
-        if (data.length === 720) {
+        if (data.length > width) {
             count++;
             x_index = 0;
             data = []

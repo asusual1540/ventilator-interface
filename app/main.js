@@ -1,6 +1,6 @@
-let pressure_chart = new render_pressure_chart()
-let volume_chart = new render_volume_chart()
-let flow_chart = new render_flow_chart()
+let pressure_chart = new render_pressure_chart(window.innerWidth, window.innerHeight)
+let volume_chart = new render_volume_chart(window.innerWidth, window.innerHeight)
+let flow_chart = new render_flow_chart(window.innerWidth, window.innerHeight)
 
 
 
@@ -38,8 +38,8 @@ function push_random_data(array) {
         }
        
         
-        let press_amp = 30
-        let vol_amp = 800
+        let press_amp = 100
+        let vol_amp = 100
         let flow_amp = 100
         pressure_data.splice(counter, 1, (Math.sin(pres_angle * Math.PI/180) * press_amp))
         volume_data.splice(counter, 1, (Math.sin(vol_angle * Math.PI / 180) * vol_amp))
@@ -257,18 +257,90 @@ function set_value(element_id, value) {
     return
 }
 
+function focus_div (class_name, index) {
+    $(`.${class_name}`).each(function (idx) {
+        if (index === idx) {
+            $(this).focus()
+            $(this).addClass("focus_style")
+        } else {
+            $(this).blur()
+            $(this).removeClass("focus_style")
+        }
+    })
+}
+
+const FOCUS_STATE = {
+    "active": "grand_focus",
+    "grand_focus" : 0,
+    "mode_focus": 0,
+    "param_focus": 0,
+    "input_focus": 0
+}
 
 
-$(document).ready(function () {
-    // set status
-    set_ventilator_status("Ventilator is idle now.", COLOR_PRIMARY, COLOR_INACTIVE)
-
-})
 
 $(document).ready(function () {
     // setTimeout(function () {
     //     window.ventilator.send_commands("hi")
     // }, 1000)
+    // set status
+    set_ventilator_status("Ventilator is idle now.", COLOR_PRIMARY, COLOR_INACTIVE)
+
+    let selected_index = FOCUS_STATE[FOCUS_STATE["active"]]
+
+    let total_menu = $(`.${FOCUS_STATE["active"]}`).length
+
+
+    console.log(`active state ${FOCUS_STATE["active"]}`)
+    console.log(`total menus ${selected_index}`)
+
+    focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
+
+    console.log(`initial focused, ${FOCUS_STATE["active"]} selected idx, ${FOCUS_STATE[`${FOCUS_STATE["active"]}`]}`, "total menu", total_menu)
+
+    function handleKeyPress (event) {
+
+        if (event.keyCode == 37) {
+
+            total_menu = $(`.${FOCUS_STATE["active"]}`).length
+            console.log("total menu", total_menu)
+            
+            if (FOCUS_STATE[`${FOCUS_STATE["active"]}`] === 0) {
+                FOCUS_STATE[`${FOCUS_STATE["active"]}`] = total_menu - 1
+            } 
+            else {
+                FOCUS_STATE[`${FOCUS_STATE["active"]}`] = FOCUS_STATE[`${FOCUS_STATE["active"]}`] - 1
+            }
+            console.log("you pressed left/previous", FOCUS_STATE)
+            console.log(`focusing class - ${FOCUS_STATE["active"]}  index - ${FOCUS_STATE[`${FOCUS_STATE["active"]}`]}`)
+            focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
+
+        } else if ( event.keyCode == 39) {
+
+            total_menu = $(`.${FOCUS_STATE["active"]}`).length
+            console.log("total menu", total_menu)
+            
+            if (FOCUS_STATE[`${FOCUS_STATE["active"]}`] === (total_menu - 1)) {
+                FOCUS_STATE[`${FOCUS_STATE["active"]}`] = 0
+            } 
+            else {
+                FOCUS_STATE[`${FOCUS_STATE["active"]}`] = FOCUS_STATE[`${FOCUS_STATE["active"]}`] + 1
+            }
+            console.log("you pressed right/next", FOCUS_STATE)
+            console.log(`focusing class - ${FOCUS_STATE["active"]}  index - ${FOCUS_STATE[`${FOCUS_STATE["active"]}`]}`)
+            focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
+        } else if (event.keyCode == 13) {
+            console.log("you pressed enter", FOCUS_STATE)
+            console.log(`current focused in enter, ${FOCUS_STATE["active"]} selected idx, ${FOCUS_STATE[`${FOCUS_STATE["active"]}`]}`)
+            // $(".grand_focus").first().addClass("focus_style");
+            // FOCUS_STATE["active"] = "mode_focus"
+            // console.log("ventilator settings clicked", FOCUS_STATE)
+            // focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
+        }
+    }
+    
+    window.addEventListener('keyup', handleKeyPress, true)
+
     remove_all_dials()
     hide_confirmation_modal()
 
@@ -300,6 +372,10 @@ $(document).ready(function () {
         hide_parameter()
         hide_confirmation_modal()
         show_cancel_button("control")
+        FOCUS_STATE["active"] = "mode_focus"
+        console.log("ventilator settings clicked", FOCUS_STATE)
+        focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
+
     })
 
     $('#cancel').bind("click tap", function () {
@@ -308,6 +384,10 @@ $(document).ready(function () {
         hide_parameter()
         hide_modes()
         remove_all_dials()
+        FOCUS_STATE["active"] = "grand_focus"
+        FOCUS_STATE["mode_focus"] = 0
+        console.log("Cancel settings clicked", FOCUS_STATE)
+        focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
     })
 
 
@@ -327,6 +407,11 @@ $(document).ready(function () {
                 show_dial('P_range', 0, 60, 1, 20)
                 show_dial('vti_range', 25, 1000, 25, 400)
                 show_dial('p_range', 0, 20, 1, 0)
+
+                FOCUS_STATE["active"] = "param_focus"
+                console.log("Mode clicked", FOCUS_STATE)
+                focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
+
                 break
             case "2": // VC_SIMV
                 remove_all_dials()
@@ -335,6 +420,11 @@ $(document).ready(function () {
                 show_dial('P_range', 0, 60, 1, 20)
                 show_dial('vti_range', 25, 1000, 25, 400)
                 show_dial('p_range', 0, 20, 1, 0)
+
+                FOCUS_STATE["active"] = "param_focus"
+                console.log("Mode clicked", FOCUS_STATE)
+                focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
+
                 break
             case "3": // PSV
 
@@ -345,6 +435,11 @@ $(document).ready(function () {
                 show_dial('ie_range', 1, 4, .1, 2)
                 show_dial('P_range', 0, 60, 1, 20)
                 show_dial('p_range', 0, 20, 1, 0)
+
+                FOCUS_STATE["active"] = "param_focus"
+                console.log("Mode clicked", FOCUS_STATE)
+                focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
+
                 break
             case "5": // PC_SIMV
                 remove_all_dials()
@@ -352,20 +447,36 @@ $(document).ready(function () {
                 show_dial('ie_range', 1, 4, .1, 2)
                 show_dial('P_range', 0, 60, 1, 20)
                 show_dial('p_range', 0, 20, 1, 0)
+
+                FOCUS_STATE["active"] = "param_focus"
+                console.log("Mode clicked", FOCUS_STATE)
+                focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
+
                 break
             case "6": // PRVC
 
+                FOCUS_STATE["active"] = "param_focus"
+                console.log("Mode clicked", FOCUS_STATE)
+                focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
+
                 break
             case "7": // CPAP
-
+                FOCUS_STATE["active"] = "param_focus"
+                console.log("Mode clicked", FOCUS_STATE)
+                focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
                 break
             case "8": // BIPAP
-
+                FOCUS_STATE["active"] = "param_focus"
+                console.log("Mode clicked", FOCUS_STATE)
+                focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
                 break
             case "c": // Calibrate
-
+                FOCUS_STATE["active"] = "param_focus"
+                console.log("Mode clicked", FOCUS_STATE)
+                focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
                 break
             default:
+
 
         }
         show_back_button("control")
@@ -391,6 +502,10 @@ $(document).ready(function () {
         hide_parameter()
         hide_confirmation_modal()
         remove_all_dials()
+
+        FOCUS_STATE["active"] = "mode_focus"
+        console.log("ventilator settings clicked", FOCUS_STATE)
+        focus_div(FOCUS_STATE["active"], FOCUS_STATE[`${FOCUS_STATE["active"]}`])
     })
 
 
@@ -571,6 +686,7 @@ function set_left_side_value(parameter, value) {
 
 function show_dial(element, minimum, maximum, step, default_value) {
 
+    $(`.${element}`).parent().addClass("param_focus")
     $(`.${element}`).parent().css("display", "flex")
     $(`.${element}`).parent().attr("parameter_shown", element)
     $(`.${`${element}`} input`).attr("min", minimum)
@@ -848,6 +964,7 @@ function show_input(full_text, value) {
 function remove_all_dials() {
     $(".parameter").css("display", "none")
     $(".parameter").removeAttr("parameter_shown")
+    $(".parameter").removeClass("param_focus")
 }
 
 function show_modal(width, height, title) {

@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./styles.css">
-    <title>coventilator</title>
+    <title>Giga Ventilator</title>
 </head>
 
 <body>
@@ -26,15 +26,15 @@
 
                     <div class="mode_options">
 
-                        <button class="mode_select_button" name="VC_CMV" m="1">VC-CMV</button>
-                        <button class="mode_select_button" name="VC_SIMV" m="4">VC-SIMV</button>
-                        <button class="mode_select_button" name="PSV" m="3">PSV</button>
-                        <button class="mode_select_button" name="PC_CMV" m="2">PC-CMV</button>
-                        <button class="mode_select_button" name="PC_SIMV" m="5">PC-SIMV</button>
-                        <button class="mode_select_button" name="PRVC" m="6">PRVC</button>
-                        <button class="mode_select_button" name="CPAP" m="7">CPAP</button>
-                        <button class="mode_select_button" name="BIPAP" m="8">BIPAP</button>
-                        <button class="mode_select_button" name="Calibrate" m="c">Calibrate</button>
+                        <button class="mode_select_button mode_focus" name="VC_CMV" m="1">VC-CMV</button>
+                        <button class="mode_select_button mode_focus" name="VC_SIMV" m="4">VC-SIMV</button>
+                        <button class="mode_select_button mode_focus" name="PSV" m="3">PSV</button>
+                        <button class="mode_select_button mode_focus" name="PC_CMV" m="2">PC-CMV</button>
+                        <button class="mode_select_button mode_focus" name="PC_SIMV" m="5">PC-SIMV</button>
+                        <button class="mode_select_button mode_focus" name="PRVC" m="6">PRVC</button>
+                        <button class="mode_select_button mode_focus" name="CPAP" m="7">CPAP</button>
+                        <button class="mode_select_button mode_focus" name="BIPAP" m="8">BIPAP</button>
+                        <button class="mode_select_button mode_focus" name="Calibrate" m="c">Calibrate</button>
 
                     </div>
                     <div class="parameter_options">
@@ -197,9 +197,9 @@
                     </div>
                 </div>
                 <div class="modal_footer">
-                    <button id="back" from="" class="v_btn"><span>Back</span></button>
-                    <button id="cancel" from="" class="v_btn"><span>Cancel</span></button>
-                    <button id="confirm" from="" class="v_btn"><span>Confirm</span></button>
+                    <button id="back" from="" class="v_btn param_focus"><span>Back</span></button>
+                    <button id="cancel" from="" class="v_btn param_focus mode_focus"><span>Cancel</span></button>
+                    <button id="confirm" from="" class="v_btn param_focus"><span>Confirm</span></button>
                 </div>
             </div>
         </div>
@@ -210,11 +210,11 @@
             <div class="charts">
                 <div class="current_settings_container">
                     <div class="left_controls">
-                        <button id="show" class="settings">
+                        <button id="show" class="settings grand_focus">
                             <img class="settings_icon" width="20" src="./controls.svg" alt="settings">
                             <div class="settings_text">Controls</div>
                         </button>
-                        <button class="action">
+                        <button class="action grand_focus">
                             <img class="settings_icon" width="20" src="./start.svg" alt="settings">
                             <div class="current_action_text">Start</div>
                         </button>
@@ -301,22 +301,22 @@
                 <p class="flow_chart_title">Flow</p>
             </div>
             <div class="information">
-                <button class="info_item" id="p" configurable=true>
+                <button class="info_item grand_focus" id="p" configurable=true>
                     <div class="info_item_text">PEEP</div>
                     <div class="info_item_value" param="p" id="peep_value">-/0</div>
                     <div class="info_item_unit">cmH<sub>2</sub>O</div>
                 </button>
-                <button class="info_item" id="P" configurable=true>
+                <button class="info_item grand_focus" id="P" configurable=true>
                     <div class="info_item_text">P<sub>IP</sub></div>
                     <div class="info_item_value" param="P" id="pip_value">-/20</div>
                     <div class="info_item_unit">cmH<sub>2</sub>O</div>
                 </button>
-                <button class="info_item" id="fio2" configurable=true>
+                <button class="info_item grand_focus" id="fio2" configurable=true>
                     <div class="info_item_text">FiO<sub>2</sub></div>
                     <div class="info_item_value" param="fio2">-/21</div>
                     <div class="info_item_unit">%</div>
                 </button>
-                <button class="info_item" id="vti" configurable=true>
+                <button class="info_item grand_focus" id="vti" configurable=true>
                     <div class="info_item_text">VTi </div>
                     <div class="info_item_value" param="vti" id="vti_value">-/400</div>
                     <div class="info_item_unit">ml</div>
@@ -326,17 +326,17 @@
                     <div class="info_item_value" param="vte" id="vte_value">-</div>
                     <div class="info_item_unit">ml</div>
                 </div>
-                <button class="info_item" id="rr" configurable=true>
+                <button class="info_item grand_focus" id="rr" configurable=true>
                     <div class="info_item_text">RR </div>
                     <div class="info_item_value" param="rr">-/12</div>
                     <div class="info_item_unit">b/m</div>
                 </button>
-                <button class="info_item" id="ie" configurable=true>
+                <button class="info_item grand_focus" id="ie" configurable=true>
                     <div class="info_item_text">I:E</div>
                     <div class="info_item_value" param="ie">-/1:2</div>
                     <div class="info_item_unit"></div>
                 </button>
-                <button class="info_item" id="ramp" configurable=true>
+                <button class="info_item grand_focus" id="ramp" configurable=true>
                     <div class="info_item_text">Ramp Time</div>
                     <div class="info_item_value" param="ramp">10</div>
                     <div class="info_item_unit">sec</div>
@@ -365,12 +365,12 @@
                 <div class="control_item_unit">cmH<sub>2</sub>O</div>
                 <div class="control_item_text">P<sub>PLAT</sub></div>
             </div>
-            <button id="pif" class="control_item" configurable=true>
+            <button id="pif" class="control_item grand_focus" configurable=true>
                 <div class="control_item_value" param="pif" id="pif_value">-/-</div>
                 <div class="control_item_unit">L/min</div>
                 <div class="control_item_text">PIF</div>
             </button>
-            <button id="h" class="control_item" configurable=true>
+            <button id="h" class="control_item grand_focus" configurable=true>
                 <div class="control_item_value" param="h">-/0</div>
                 <div class="control_item_unit">%</div>
                 <div class="control_item_text">Humidity</div>

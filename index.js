@@ -1,19 +1,20 @@
-const { app, BrowserWindow } = require('electron')
+const { app, BrowserWindow, ipcMain, globalShortcut  } = require('electron')
 
 function createWindow() {
     const win = new BrowserWindow({
         width: 800,
         height: 600,
+        frame: true,
         webPreferences: {
-            nodeIntegration: true
+            nodeIntegration: true,
         },
-        frame: false,
         fullscreen: true
     })
 
     win.loadFile('app/index.html')
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
 }
+
 
 app.whenReady().then(createWindow)
 

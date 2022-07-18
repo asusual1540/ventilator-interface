@@ -1,4 +1,4 @@
-function render_pressure_chart() {
+function render_pressure_chart (w, h) {
 
     var margin = {
         top: 20,
@@ -8,11 +8,11 @@ function render_pressure_chart() {
     }
 
     var x_index = 0;
-    var width = 800 - margin.left - margin.right;
-    var height = 190 - margin.top - margin.bottom;
+    var width = (w * 0.68) - margin.left - margin.right;
+    var height = (h * 0.38) - margin.top - margin.bottom;
     var data = [];
-    var x = d3.scaleLinear().domain([0, 720]).range([0, width]);
-    var y = d3.scaleLinear().domain([-5, 45]).range([height, 0]);
+    var x = d3.scaleLinear().domain([0, width]).range([0, width]);
+    var y = d3.scaleLinear().domain([-height, height]).range([height, 0]);
     var count = 0;
     var line_to_draw;
 
@@ -137,8 +137,7 @@ function render_pressure_chart() {
         data.push(point);
         x_index++;
 
-
-        if (data.length === 720) {
+        if (data.length > width) {
             count++;
             x_index = 0;
             data = []
